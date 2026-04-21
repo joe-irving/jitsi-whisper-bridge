@@ -1,0 +1,18 @@
+services:
+  whisper.cpp:
+    build: ./whisper.cpp
+    volumes:
+      - ./models:/models
+    networks:
+      jitsi-docker-jitsi-meet-5499476_meet.jitsi:
+  
+  whisper-bridge:
+    build: .
+    volumes:
+      - ./config.yml:/etc/whisper-bridge/config.yml
+    networks:
+      jitsi-docker-jitsi-meet-5499476_meet.jitsi:
+
+networks:
+    jitsi-docker-jitsi-meet-5499476_meet.jitsi:
+      external: true

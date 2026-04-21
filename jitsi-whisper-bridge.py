@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.12
 """
 WebSocket bridge between Jitsi (Jigasi) and whisper.cpp
 WITH JWT AUTHENTICATION, TLS SUPPORT, AND CONFIGURATION FILE
@@ -385,7 +385,9 @@ class WhisperClient:
 # WEBSOCKET HANDLER
 # ============================================================================
 
-async def handle_client(websocket, path, config, jwt_auth, whisper_client):
+async def handle_client(websocket, config, jwt_auth, whisper_client):
+    path = websocket.request.path
+    logger.info("handle_client called")
     client_addr = websocket.remote_address
     logger.info(f"{'='*70}")
     logger.info(f"NEW CONNECTION from {client_addr}")
@@ -593,7 +595,7 @@ Configuration file format (YAML):
     port = config.get('server.port')
     
     server = await websockets.serve(
-        lambda ws, path: handle_client(ws, path, config, jwt_auth, whisper_client),
+        lambda ws: handle_client(ws, config, jwt_auth, whisper_client),
         host,
         port,
         ping_interval=config.get('server.ping_interval'),

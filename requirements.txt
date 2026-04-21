@@ -1,0 +1,8 @@
+configparser
+asyncio
+websockets
+requests
+logging
+argparse
+pyyaml
+jwt
